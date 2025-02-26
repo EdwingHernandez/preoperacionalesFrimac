@@ -1,6 +1,8 @@
 package com.frimac.preoperational.persistence.entities;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -89,8 +91,6 @@ public class SurveyCompletion {
 
     public void setSurvey(Survey survey) {
         this.survey = survey;
-    }
-
-    
+    }    
 
 }

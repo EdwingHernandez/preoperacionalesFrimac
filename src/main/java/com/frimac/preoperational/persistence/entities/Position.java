@@ -23,6 +23,8 @@ public class Position {
     @Column(name = "name_position", unique = true)
     private String name;
 
+    public Position() {
+    }    
 
     public Position(@NotBlank @Size(min = 4, max = 30) String name) {
         this.name = name;

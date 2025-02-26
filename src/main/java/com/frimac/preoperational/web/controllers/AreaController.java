@@ -5,23 +5,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.frimac.preoperational.domain.dto.AreaDTO;
 import com.frimac.preoperational.domain.services.Area.AreaService;
-import com.frimac.preoperational.persistence.entities.Area;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 
 
 @RestController
-@RequestMapping("/area")
+@RequestMapping("/areas")  // Uso de plural para seguir convención REST
 public class AreaController {
 
     private final AreaService areaService;
@@ -29,30 +29,34 @@ public class AreaController {
     public AreaController(AreaService areaService) {
         this.areaService = areaService;
     }
-    
 
-    @GetMapping("/all")
-    public ResponseEntity<List<AreaDTO>>  listAllAreas(){
+    @GetMapping
+    public ResponseEntity<List<AreaDTO>> listAllAreas() {
         return ResponseEntity.ok(areaService.findAll());
     }
-    
 
     @GetMapping("/{id}")
-    public ResponseEntity<AreaDTO> getArea(@PathVariable Long id){
-        Optional<AreaDTO> areaDTO = areaService.findById(id);
-        return areaDTO.map(ResponseEntity :: ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<AreaDTO> getArea(@PathVariable Long id) {
+        return areaService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/new")
-    public String postMethodName(@RequestBody String entity) {
-        //TODO: process POST request
-        
-        return entity;
-    }
-    
-    public ResponseEntity<AreaDTO> createArea(@RequestBody Area area){
-        AreaDTO areaDTO = areaService.save(area);
-        return ResponseEntity.status(HttpStatus.CREATED).body(areaDTO);
+    @PostMapping
+    public ResponseEntity<AreaDTO> createArea(@RequestBody AreaDTO areaDTO) {
+        AreaDTO savedArea = areaService.save(areaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedArea);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AreaDTO> updateArea(@PathVariable Long id, @RequestBody AreaDTO areaDTO) {
+        AreaDTO updatedArea = areaService.update(id, areaDTO);
+        return ResponseEntity.ok(updatedArea);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteArea(@PathVariable Long id) {
+        return areaService.delete(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
 }
+

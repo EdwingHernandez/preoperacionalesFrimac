@@ -17,8 +17,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class AreaServiceImpl implements AreaService {
 
-    @Autowired
-    private AreaRepository areaRepository;
+    private final AreaRepository areaRepository;
 
     public AreaServiceImpl(AreaRepository areaRepository) {
         this.areaRepository = areaRepository;
@@ -34,38 +33,48 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public Optional<AreaDTO> findById(Long id) {
-        Optional<Area> area = areaRepository.findById(id);
-        return area.map(this::toDTO);
+        return areaRepository.findById(id).map(this::toDTO);
     }  
-    
+
     @Override
-    public AreaDTO save(Area area) {
-        Area newAreaDTO = areaRepository.save(area);
-        return toDTO(newAreaDTO);
+    public AreaDTO save(AreaDTO areaDTO) {
+        Area area = toEntity(areaDTO);
+        Area newArea = areaRepository.save(area);
+        return toDTO(newArea);
     }    
 
     @Override
-    public Area update(Long id, Area area) {
+    public AreaDTO update(Long id, AreaDTO areaDTO) {
+        Area existingArea = areaRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Área no encontrada con id " + id));
+
+        if (areaDTO.getName() != null) {
+            existingArea.setName(areaDTO.getName());
+        }
+        Area savedArea = areaRepository.save(existingArea);
+
+        return toDTO(savedArea);
+    } 
+
+    @Override
+    public Boolean delete(Long id) {
         if (!areaRepository.existsById(id)) {
-            throw new EntityNotFoundException("Area no encontrada con id " + id);
+            return false;
         }
-        area.setId(id); 
-        return areaRepository.save(area);
-    }    
-
-    @Override
-    @Transactional
-    public Optional<Area> delete(Long id) {
-        Optional<Area> area = areaRepository.findById(id);
-        if (area.isPresent()) {
-            areaRepository.deleteById(id);
-        }
-        return area;
+        areaRepository.deleteById(id);
+        return true;
     }
 
-    private AreaDTO toDTO(Area area){
+    private AreaDTO toDTO(Area area) {
         return new AreaDTO(area.getId(), area.getName());
     }
 
-
+    private Area toEntity(AreaDTO areaDTO) {
+        Area area = new Area();
+        area.setId(areaDTO.getId()); 
+        area.setName(areaDTO.getName());
+        return area;
+    }
 }
+
+

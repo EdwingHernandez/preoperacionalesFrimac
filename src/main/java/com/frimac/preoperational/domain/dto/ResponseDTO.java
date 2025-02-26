@@ -57,8 +57,5 @@ public class ResponseDTO {
     public void setIdQuestion(Long idQuestion) {
         this.idQuestion = idQuestion;
     }
-
-    
-    
     
 }

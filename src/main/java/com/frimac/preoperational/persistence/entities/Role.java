@@ -19,6 +19,9 @@ public class Role {
     @Column(name = "role_name", unique = true)
     private String name;
 
+    public Role() {
+    }
+
     public Role(String name){
         this.name = name;
     }
@@ -38,8 +41,5 @@ public class Role {
     public void setId(Long id) {
         this.id = id;
     }
-
-    
-    
 
 }

@@ -1,17 +1,19 @@
 package com.frimac.preoperational.domain.services.SurveyCompletion;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.frimac.preoperational.persistence.entities.SurveyCompletion;
+import com.frimac.preoperational.domain.dto.SurveyCompletionDTO;
 
 
 public interface SurveyCompletionService {
-
-    List<SurveyCompletion> findAll();
-    Optional<SurveyCompletion> findById(Long id);
-    SurveyCompletion save(SurveyCompletion surveyCompletion);
-    SurveyCompletion update(Long id, SurveyCompletion surveyCompletion);
-    Optional<SurveyCompletion> delete(Long id); 
+    SurveyCompletionDTO createSurveyCompletion(SurveyCompletionDTO surveyCompletionDTO);
+    SurveyCompletionDTO getSurveyCompletionById(Long id);
+    List<SurveyCompletionDTO> getAllSurveyCompletions();
+    SurveyCompletionDTO updateSurveyCompletion(Long id, SurveyCompletionDTO surveyCompletionDTO);
+    void deleteSurveyCompletion(Long id);
+    List<SurveyCompletionDTO> getSurveyCompletionsByUser(String userId);
 
 }
+
+
+

@@ -47,9 +47,5 @@ public class SurveyAssignmentDTO {
     public void setIdSurvey(Long idSurvey) {
         this.idSurvey = idSurvey;
     }
-
-
-    
-
     
 }

@@ -1,16 +1,16 @@
 package com.frimac.preoperational.domain.services.User;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.frimac.preoperational.persistence.entities.User;
+import com.frimac.preoperational.domain.dto.UserDTO;
 
 
 public interface UserService {
 
-    List<User> findAll();
-    Optional<User> findById(String id);
-    User save(User user);
-    User update(String id, User user);
+    List<UserDTO> findAllUsers();
+    UserDTO findUserById(String id);
+    UserDTO saveUser(UserDTO userDTO);
+    UserDTO modifyUser(String id, UserDTO userDTO);
+    void removeUser(String id);
 
 }

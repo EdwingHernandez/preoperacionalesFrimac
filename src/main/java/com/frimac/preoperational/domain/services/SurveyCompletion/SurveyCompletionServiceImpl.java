@@ -1,16 +1,19 @@
 package com.frimac.preoperational.domain.services.SurveyCompletion;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.frimac.preoperational.domain.dto.SurveyCompletionDTO;
+import com.frimac.preoperational.persistence.entities.Survey;
 import com.frimac.preoperational.persistence.entities.SurveyCompletion;
+import com.frimac.preoperational.persistence.entities.User;
 import com.frimac.preoperational.persistence.repositories.SurveyCompletionRepository;
+import com.frimac.preoperational.persistence.repositories.SurveyRepository;
+import com.frimac.preoperational.persistence.repositories.UserRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class SurveyCompletionServiceImpl implements SurveyCompletionService {
@@ -18,43 +21,88 @@ public class SurveyCompletionServiceImpl implements SurveyCompletionService {
     @Autowired
     private SurveyCompletionRepository surveyCompletionRepository;
 
-    public SurveyCompletionServiceImpl(SurveyCompletionRepository surveyCompletionRepository) {
-        this.surveyCompletionRepository = surveyCompletionRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private SurveyRepository surveyRepository;
+
+    @Override
+    public SurveyCompletionDTO createSurveyCompletion(SurveyCompletionDTO surveyCompletionDTO) {
+        SurveyCompletion completion = new SurveyCompletion();
+        completion.setDate(surveyCompletionDTO.getDate());
+        completion.setIscompleted(surveyCompletionDTO.getIscompleted());
+
+        User user = userRepository.findById(surveyCompletionDTO.getIdUser())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        completion.setUser(user);
+
+        Survey survey = surveyRepository.findById(surveyCompletionDTO.getIdSurvey())
+                .orElseThrow(() -> new RuntimeException("Encuesta no encontrada"));
+        completion.setSurvey(survey);
+
+        completion = surveyCompletionRepository.save(completion);
+        return convertToDTO(completion);
     }
 
     @Override
-    public List<SurveyCompletion> findAll() {
-        return surveyCompletionRepository.findAll();
+    public SurveyCompletionDTO getSurveyCompletionById(Long id) {
+        SurveyCompletion completion = surveyCompletionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Registro de finalización no encontrado"));
+        return convertToDTO(completion);
     }
 
     @Override
-    public Optional<SurveyCompletion> findById(Long id) {
-        return surveyCompletionRepository.findById(id);
-    }  
+    public List<SurveyCompletionDTO> getAllSurveyCompletions() {
+        List<SurveyCompletion> completions = surveyCompletionRepository.findAll();
+        return completions.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public SurveyCompletionDTO updateSurveyCompletion(Long id, SurveyCompletionDTO surveyCompletionDTO) {
+        SurveyCompletion completion = surveyCompletionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Registro de finalización no encontrado"));
+
+        completion.setDate(surveyCompletionDTO.getDate());
+        completion.setIscompleted(surveyCompletionDTO.getIscompleted());
+
+        User user = userRepository.findById(surveyCompletionDTO.getIdUser())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        completion.setUser(user);
+
+        Survey survey = surveyRepository.findById(surveyCompletionDTO.getIdSurvey())
+                .orElseThrow(() -> new RuntimeException("Encuesta no encontrada"));
+        completion.setSurvey(survey);
+
+        completion = surveyCompletionRepository.save(completion);
+        return convertToDTO(completion);
+    }
+
+    @Override
+    public void deleteSurveyCompletion(Long id) {
+        if (!surveyCompletionRepository.existsById(id)) {
+            throw new RuntimeException("Registro de finalización no encontrado");
+        }
+        surveyCompletionRepository.deleteById(id);
+    }
+
+    private SurveyCompletionDTO convertToDTO(SurveyCompletion completion) {
+        return new SurveyCompletionDTO(
+                completion.getId(),
+                completion.getDate(),
+                completion.getIscompleted(),
+                completion.getUser().getId(),
+                completion.getSurvey().getId()
+        );
+    }
     
     @Override
-    public SurveyCompletion save(SurveyCompletion surveyCompletion) {
-        return surveyCompletionRepository.save(surveyCompletion);
-    }    
-
-    @Override
-    public SurveyCompletion update(Long id, SurveyCompletion surveyCompletion) {
-        if (!surveyCompletionRepository.existsById(id)) {
-            throw new EntityNotFoundException("SurveyCompletion no encontrada con id " + id);
-        }
-        surveyCompletion.setId(id); 
-        return surveyCompletionRepository.save(surveyCompletion);
-    }    
-
-    @Override
-    @Transactional
-    public Optional<SurveyCompletion> delete(Long id) {
-        Optional<SurveyCompletion> surveyCompletion = surveyCompletionRepository.findById(id);
-        if (surveyCompletion.isPresent()) {
-            surveyCompletionRepository.deleteById(id);
-        }
-        return surveyCompletion;
+    public List<SurveyCompletionDTO> getSurveyCompletionsByUser(String userId) {
+        List<SurveyCompletion> completions = surveyCompletionRepository.findByUserId(userId);
+        return completions.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+    
 
 
 }
+

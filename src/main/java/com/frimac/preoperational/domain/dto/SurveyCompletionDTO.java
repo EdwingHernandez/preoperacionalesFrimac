@@ -58,6 +58,4 @@ public class SurveyCompletionDTO {
         this.idSurvey = idSurvey;
     }
 
-    
-    
 }

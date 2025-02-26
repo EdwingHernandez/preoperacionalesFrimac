@@ -46,7 +46,4 @@ public class SurveyDTO {
         this.state = state;
     }
 
-
-    
-
 }

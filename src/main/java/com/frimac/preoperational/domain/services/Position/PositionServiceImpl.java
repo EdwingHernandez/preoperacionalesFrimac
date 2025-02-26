@@ -2,11 +2,11 @@ package com.frimac.preoperational.domain.services.Position;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.frimac.preoperational.domain.dto.PositionDTO;
 import com.frimac.preoperational.persistence.entities.Position;
 import com.frimac.preoperational.persistence.repositories.PositionRepository;
 
@@ -15,47 +15,61 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class PositionServiceImpl implements PositionService {
 
-    @Autowired
-    private PositionRepository positionRepository;
+    private final PositionRepository positionRepository;
 
     public PositionServiceImpl(PositionRepository positionRepository) {
         this.positionRepository = positionRepository;
     }
 
     @Override
-    public List<Position> findAll() {
-        return positionRepository.findAll();
+    public List<PositionDTO> findAll() {
+        return positionRepository.findAll()
+                .stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Position> findById(Long id) {
-        return positionRepository.findById(id);
+    public Optional<PositionDTO> findById(Long id) {
+        return positionRepository.findById(id).map(this::toDTO);
     }  
-    
+
     @Override
-    public Position save(Position position) {
-        return positionRepository.save(position);
+    public PositionDTO save(PositionDTO positionDTO) {
+        Position position = toEntity(positionDTO);
+        Position newPosition = positionRepository.save(position);
+        return toDTO(newPosition);
     }    
 
     @Override
-    public Position update(Long id, Position position) {
+    public PositionDTO update(Long id, PositionDTO positionDTO) {
+        Position existingPosition = positionRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Position no encontrada con id " + id));
+
+        if (positionDTO.getName() != null) {
+            existingPosition.setName(positionDTO.getName());
+        }
+        Position savedPosition = positionRepository.save(existingPosition);
+
+        return toDTO(savedPosition);
+    } 
+
+    @Override
+    public Boolean delete(Long id) {
         if (!positionRepository.existsById(id)) {
-            throw new EntityNotFoundException("Position no encontrada con id " + id);
+            return false;
         }
-        position.setId(id); 
-        return positionRepository.save(position);
-    }    
+        positionRepository.deleteById(id);
+        return true;
+    }
 
-    @Override
-    @Transactional
-    public Optional<Position> delete(Long id) {
-        Optional<Position> position = positionRepository.findById(id);
-        if (position.isPresent()) {
-            positionRepository.deleteById(id);
-        }
+    private PositionDTO toDTO(Position position) {
+        return new PositionDTO(position.getId(), position.getName());
+    }
+
+    private Position toEntity(PositionDTO positionDTO) {
+        Position position = new Position(positionDTO.getName());
+        position.setId(positionDTO.getId());
         return position;
     }
-
-
-
 }

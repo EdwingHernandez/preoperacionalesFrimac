@@ -23,6 +23,10 @@ public class QuestionType {
     @Column(name = "qtype_name", unique = true)
     private String name;
 
+    public QuestionType() {
+    }
+
+    
     public QuestionType(@NotBlank @Size(min = 4, max = 20) String name) {
         this.name = name;
     }
@@ -42,7 +46,5 @@ public class QuestionType {
     public void setName(String name) {
         this.name = name;
     }
-
-    
 
 }

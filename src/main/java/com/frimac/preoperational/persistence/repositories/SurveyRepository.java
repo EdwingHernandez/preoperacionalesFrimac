@@ -7,5 +7,5 @@ import com.frimac.preoperational.persistence.entities.Survey;
 
 @Repository
 public interface SurveyRepository extends JpaRepository<Survey, Long>{
-
+    boolean existsByName(String name);
 }

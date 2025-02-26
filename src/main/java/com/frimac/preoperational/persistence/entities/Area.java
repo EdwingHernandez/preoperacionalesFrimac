@@ -23,6 +23,10 @@ public class Area {
     @Column(name = "name_area", unique = true)
     private String name;
 
+    
+
+    public Area() {
+    }
 
     public Area(@NotBlank @Size(min = 4, max = 30) String name) {
         this.name = name;

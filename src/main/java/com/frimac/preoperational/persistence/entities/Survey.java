@@ -30,6 +30,11 @@ public class Survey {
     @NotBlank
     @Column(name = "survey_state")
     private Boolean state;
+    
+
+    
+    public Survey() {
+    }
 
     public Survey(@NotBlank @Size(min = 4, max = 30) String name, String description, @NotBlank Boolean state) {
         this.name = name;
@@ -68,7 +73,5 @@ public class Survey {
     public void setState(Boolean state) {
         this.state = state;
     }
-
-    
 
 }

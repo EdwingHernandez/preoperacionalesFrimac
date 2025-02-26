@@ -30,9 +30,4 @@ public class QuestionTypeDTO {
         this.name = name;
     }
 
-    
-
-
-    
-
 }

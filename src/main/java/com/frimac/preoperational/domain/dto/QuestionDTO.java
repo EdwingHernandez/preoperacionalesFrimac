@@ -46,9 +46,6 @@ public class QuestionDTO {
         this.idQuestiontype = idQuestiontype;
     }
 
-    
-
-    
 
 
 }

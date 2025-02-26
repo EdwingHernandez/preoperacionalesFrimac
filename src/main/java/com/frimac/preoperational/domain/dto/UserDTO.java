@@ -75,9 +75,5 @@ public class UserDTO {
     public void setIdPosition(Long idPosition) {
         this.idPosition = idPosition;
     }
-
-
-    
-
     
 }

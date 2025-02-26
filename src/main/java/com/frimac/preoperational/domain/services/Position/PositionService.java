@@ -3,13 +3,13 @@ package com.frimac.preoperational.domain.services.Position;
 import java.util.List;
 import java.util.Optional;
 
-import com.frimac.preoperational.persistence.entities.Position;
+import com.frimac.preoperational.domain.dto.PositionDTO;
 
 public interface PositionService {
 
-    List<Position> findAll();
-    Optional<Position> findById(Long id);
-    Position save(Position position);
-    Position update(Long id, Position position);
-    Optional<Position> delete(Long id); 
+    List<PositionDTO> findAll();
+    Optional<PositionDTO> findById(Long id);
+    PositionDTO save(PositionDTO PositionDTO);
+    PositionDTO update(Long id, PositionDTO positionDTO);
+    Boolean delete(Long id); 
 }
