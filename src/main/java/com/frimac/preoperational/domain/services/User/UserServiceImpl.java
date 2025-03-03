@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.frimac.preoperational.domain.dto.UserDTO;
+import com.frimac.preoperational.domain.dto.UserSurveyDTO;
 import com.frimac.preoperational.persistence.entities.Area;
 import com.frimac.preoperational.persistence.entities.Position;
 import com.frimac.preoperational.persistence.entities.Role;
@@ -14,6 +15,7 @@ import com.frimac.preoperational.persistence.entities.User;
 import com.frimac.preoperational.persistence.repositories.AreaRepository;
 import com.frimac.preoperational.persistence.repositories.PositionRepository;
 import com.frimac.preoperational.persistence.repositories.RoleRepository;
+import com.frimac.preoperational.persistence.repositories.SurveyAssignmentRepository;
 import com.frimac.preoperational.persistence.repositories.UserRepository;
 
 
@@ -31,6 +33,11 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     private PositionRepository positionRepository;
+
+
+    @Autowired
+    private SurveyAssignmentRepository surveyAssignmentRepository;    
+
 
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
@@ -113,4 +120,23 @@ public class UserServiceImpl implements UserService {
                 user.getPosition().getId()
         );
     }
+
+    public UserSurveyDTO findUserWithSurveys(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    
+        List<String> enabledSurveys = surveyAssignmentRepository.findByUser(user).stream()
+                .filter(surveyAssignment -> Boolean.TRUE.equals(surveyAssignment.getSurvey().getState()))
+                .map(surveyAssignment -> surveyAssignment.getSurvey().getName())
+                .collect(Collectors.toList());
+    
+        return new UserSurveyDTO(
+                user.getId(),
+                user.getName(),
+                user.getPosition().getName(),
+                user.getArea().getName(),
+                enabledSurveys
+        );
+    }
+    
 }

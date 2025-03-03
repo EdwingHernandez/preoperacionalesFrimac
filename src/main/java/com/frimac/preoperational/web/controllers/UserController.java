@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.frimac.preoperational.domain.dto.UserDTO;
+import com.frimac.preoperational.domain.dto.UserSurveyDTO;
 import com.frimac.preoperational.domain.services.User.UserService;
 
 @RestController
@@ -52,6 +53,11 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.removeUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/surveys/{id}")
+    public ResponseEntity<UserSurveyDTO> findUserWithSurveys(@PathVariable String id) {
+        return ResponseEntity.ok(userService.findUserWithSurveys(id));
     }
 }
 
