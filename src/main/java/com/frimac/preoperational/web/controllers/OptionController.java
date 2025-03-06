@@ -2,7 +2,6 @@ package com.frimac.preoperational.web.controllers;
 
 import com.frimac.preoperational.domain.dto.OptionDTO;
 import com.frimac.preoperational.domain.services.Option.OptionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ public class OptionController {
 
     private final OptionService optionService;
 
-    @Autowired
     public OptionController(OptionService optionService) {
         this.optionService = optionService;
     }

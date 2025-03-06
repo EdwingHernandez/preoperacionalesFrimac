@@ -19,6 +19,8 @@ INSERT INTO position (id_position, name_position) VALUES (3, 'Tecnico');
 INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('U001', 'Juan Perez', 'Activo', 'Interno', 1, 1, 1);
 INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('U002', 'Maria López', 'Activo', 'Externo', 2, 2, 2);
 INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('U003', 'Carlos Sanchez', 'Inactivo', 'Interno', 3, 3, 3);
+INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('8505416', 'CARMONA VILLA CARLOS JAVIER', 'Activo', 'Propio', 3, 1, 3);
+
 
 -- Insertar Encuestas
 INSERT INTO survey (id_survey, name_survey, survey_description, survey_state) VALUES (1, 'Encuesta Preoperacional', 'Evaluacion del estado del vehiculo', TRUE);
@@ -61,6 +63,7 @@ INSERT INTO options (option_text, idf_question) VALUES ('TURB UF-Turbo Refrigera
 INSERT INTO survey_assignment (id_assignment, assignment_date, idf_user, idf_survey) VALUES (1, '2024-02-01', 'U001', 1);
 INSERT INTO survey_assignment (id_assignment, assignment_date, idf_user, idf_survey) VALUES (2, '2024-02-02', 'U002', 2);
 INSERT INTO survey_assignment (id_assignment, assignment_date, idf_user, idf_survey) VALUES (3, '2024-02-03', 'U003', 3);
+INSERT INTO survey_assignment (id_assignment, assignment_date, idf_user, idf_survey) VALUES (4, '2024-03-05', '8505416', 1);
 
 -- Insertar Completación de Encuestas
 INSERT INTO survey_completion (id_completion, completion_date, iscompleted, idf_user, idf_survey) VALUES (1, '2024-02-10', TRUE, 'U001', 1);

@@ -1,13 +1,19 @@
 package com.frimac.preoperational.domain.services.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.frimac.preoperational.domain.dto.UserDTO;
 import com.frimac.preoperational.domain.dto.UserSurveyDTO;
+import com.frimac.preoperational.domain.dto.UserTCDTO;
+import com.frimac.preoperational.domain.dto.UserValidationDTO;
+import com.frimac.preoperational.domain.services.TorreControl.TorreApiService;
 import com.frimac.preoperational.persistence.entities.Area;
 import com.frimac.preoperational.persistence.entities.Position;
 import com.frimac.preoperational.persistence.entities.Role;
@@ -36,11 +42,30 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
-    private SurveyAssignmentRepository surveyAssignmentRepository;    
+    private SurveyAssignmentRepository surveyAssignmentRepository;   
 
 
-    @Override
+    @Autowired
+    private TorreApiService torreApiService;
+    
+
+
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, AreaRepository areaRepository,
+                PositionRepository positionRepository, SurveyAssignmentRepository surveyAssignmentRepository,
+                TorreApiService torreApiService) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.areaRepository = areaRepository;
+        this.positionRepository = positionRepository;
+        this.surveyAssignmentRepository = surveyAssignmentRepository;
+        this.torreApiService = torreApiService;
+}
+
+@Override
     public UserDTO saveUser(UserDTO userDTO) {
+        if (userRepository.existsById(userDTO.getId())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El usuario ya existe");
+        }
         User user = new User();
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
@@ -123,7 +148,7 @@ public class UserServiceImpl implements UserService {
 
     public UserSurveyDTO findUserWithSurveys(String id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
     
         List<String> enabledSurveys = surveyAssignmentRepository.findByUser(user).stream()
                 .filter(surveyAssignment -> Boolean.TRUE.equals(surveyAssignment.getSurvey().getState()))
@@ -138,5 +163,22 @@ public class UserServiceImpl implements UserService {
                 enabledSurveys
         );
     }
+
+
+    public UserValidationDTO findUserTC(String id){
+        UserTCDTO userTCDTO = torreApiService.getUserTC(id);
+        if(userTCDTO == null || !userTCDTO.isStateUserTC()){
+                return  new UserValidationDTO(false, "El usuario no está activo en Torre de Control", null);
+
+        }
+
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+                return new UserValidationDTO(false, "El usuario ya existe en el sistema, comuníquese con el lider de operación para activar la encuesta", userTCDTO);
+        }
+
+        return new UserValidationDTO(true, "El usuario puede ser creado en el sistema", userTCDTO);       
+    }
     
 }
+

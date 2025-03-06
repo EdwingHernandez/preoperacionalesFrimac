@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.frimac.preoperational.domain.dto.RoleDTO;
@@ -13,7 +12,6 @@ import com.frimac.preoperational.persistence.repositories.RoleRepository;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 
 @Service
 public class RoleServiceImpl implements RoleService {

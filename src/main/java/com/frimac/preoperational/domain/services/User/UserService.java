@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.frimac.preoperational.domain.dto.UserDTO;
 import com.frimac.preoperational.domain.dto.UserSurveyDTO;
+import com.frimac.preoperational.domain.dto.UserValidationDTO;
 
 
 public interface UserService {
@@ -14,5 +15,6 @@ public interface UserService {
     UserDTO modifyUser(String id, UserDTO userDTO);
     void removeUser(String id);
     UserSurveyDTO findUserWithSurveys(String id);
+    UserValidationDTO findUserTC(String id);
 
 }

@@ -6,7 +6,6 @@ import com.frimac.preoperational.persistence.entities.Option;
 import com.frimac.preoperational.persistence.entities.Question;
 import com.frimac.preoperational.persistence.repositories.OptionRepository;
 import com.frimac.preoperational.persistence.repositories.QuestionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,6 @@ public class OptionServiceImpl implements OptionService {
     private final OptionRepository optionRepository;
     private final QuestionRepository questionRepository;
 
-    @Autowired
     public OptionServiceImpl(OptionRepository optionRepository, QuestionRepository questionRepository) {
         this.optionRepository = optionRepository;
         this.questionRepository = questionRepository;

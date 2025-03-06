@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "torre.api.username",
+    "type": "java.lang.String",
+    "description": "Nombre de usuario para autenticación en Torre de Control"
+  },
+  {
+    "name": "torre.api.password",
+    "type": "java.lang.String",
+    "description": "Contraseña para autenticación en Torre de Control"
+  },
+  {
+    "name": "torre.api.authurl",
+    "type": "java.lang.String",
+    "description": "Url de conexión a la API de autenticación de Torre de Control"
+  },
+  {
+    "name": "torre.api.userurl",
+    "type": "java.lang.String",
+    "description": "Url de conexión a la API de obtener user de Torre de Control"
+  },
+  {
+    "name": "torre.api.clientid",
+    "type": "java.lang.String",
+    "description": "Id del cliente de conexión a la API de autenticación de Torre de Control"
+  }
+]}

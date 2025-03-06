@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.frimac.preoperational.domain.dto.AreaDTO;
@@ -12,7 +12,7 @@ import com.frimac.preoperational.persistence.entities.Area;
 import com.frimac.preoperational.persistence.repositories.AreaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class AreaServiceImpl implements AreaService {
