@@ -6,7 +6,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.frimac.preoperational.domain.dto.QuestionDTO;
+import com.frimac.preoperational.domain.dto.QuestionWithOptionsDTO;
 import com.frimac.preoperational.domain.dto.SurveyDTO;
+import com.frimac.preoperational.domain.dto.SurveyFilledModuleDTO;
+import com.frimac.preoperational.domain.services.Question.QuestionService;
 import com.frimac.preoperational.persistence.entities.Survey;
 import com.frimac.preoperational.persistence.repositories.SurveyRepository;
 
@@ -17,9 +21,11 @@ import jakarta.persistence.EntityNotFoundException;
 public class SurveyServiceImpl implements SurveyService {
 
     private final SurveyRepository surveyRepository;
+    private final QuestionService questionService;
 
-    public SurveyServiceImpl(SurveyRepository surveyRepository) {
+    public SurveyServiceImpl(SurveyRepository surveyRepository, QuestionService questionService) {
         this.surveyRepository = surveyRepository;
+        this.questionService = questionService;
     }
 
     @Override
@@ -82,4 +88,27 @@ public class SurveyServiceImpl implements SurveyService {
     private SurveyDTO toDTO(Survey survey) {
         return new SurveyDTO(survey.getId(), survey.getName(), survey.getDescription(), survey.getState());
     }
+
+    
+    @Override
+    public Optional<SurveyFilledModuleDTO> findSurveyWithQuestionsById(Long surveyId){
+
+        List<QuestionDTO> questionsDTO = questionService.findBySurveyId(surveyId);
+        List<QuestionWithOptionsDTO> questionsWithOptions = questionsDTO.stream().map(questionService::toQuestionWithOptionsDTO).collect(Collectors.toList());
+
+        Survey survey = surveyRepository.findById(surveyId)
+        .orElseThrow(() -> new RuntimeException("Encuesta no encontrada"));        
+
+        SurveyFilledModuleDTO surveyDTO = new SurveyFilledModuleDTO();
+        surveyDTO.setIdSurvey(survey.getId());
+        surveyDTO.setNameSurvey(survey.getName());
+        surveyDTO.setDescriptionSurvey(survey.getDescription());
+        surveyDTO.setStateSurvey(survey.getState());
+        surveyDTO.setQuestionsDTO(questionsWithOptions);
+
+        return Optional.of(surveyDTO);
+
+    }
+
+
 }

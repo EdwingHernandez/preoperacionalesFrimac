@@ -34,7 +34,7 @@ public class OptionServiceImpl implements OptionService {
         Question question = questionRepository.findById(optionDTO.getIdQuestion())
             .orElseThrow(() -> new RuntimeException("Question not found"));
 
-        Option option = new Option(null, optionDTO.getText(), question);
+        Option option = new Option(null, optionDTO.getText(), question, optionDTO.isCritical());
         option = optionRepository.save(option);
         return convertToDTO(option);
     }
@@ -45,7 +45,7 @@ public class OptionServiceImpl implements OptionService {
     }
 
     private OptionDTO convertToDTO(Option option) {
-        return new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId());
+        return new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId(), option.isCritical());
     }
 }
 

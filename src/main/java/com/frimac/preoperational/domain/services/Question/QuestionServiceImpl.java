@@ -4,13 +4,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.frimac.preoperational.domain.dto.OptionDTO;
 import com.frimac.preoperational.domain.dto.QuestionDTO;
+import com.frimac.preoperational.domain.dto.QuestionWithOptionsDTO;
+import com.frimac.preoperational.persistence.entities.Option;
 import com.frimac.preoperational.persistence.entities.Question;
 import com.frimac.preoperational.persistence.entities.QuestionType;
 import com.frimac.preoperational.persistence.entities.Survey;
+import com.frimac.preoperational.persistence.repositories.OptionRepository;
 import com.frimac.preoperational.persistence.repositories.QuestionRepository;
 import com.frimac.preoperational.persistence.repositories.QuestionTypeRepository;
 import com.frimac.preoperational.persistence.repositories.SurveyRepository;
@@ -23,13 +27,17 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final SurveyRepository surveyRepository;
     private final QuestionTypeRepository questionTypeRepository;
+   
+    @Autowired
+    private final OptionRepository optionRepository;
 
     public QuestionServiceImpl(QuestionRepository questionRepository, 
                                SurveyRepository surveyRepository, 
-                               QuestionTypeRepository questionTypeRepository) {
+                               QuestionTypeRepository questionTypeRepository, OptionRepository optionRepository) {
         this.questionRepository = questionRepository;
         this.surveyRepository = surveyRepository;
         this.questionTypeRepository = questionTypeRepository;
+        this.optionRepository = optionRepository;
     }
 
     @Override
@@ -113,6 +121,31 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         return question;
+    }
+
+    public QuestionWithOptionsDTO toQuestionWithOptionsDTO(QuestionDTO questionDTO) {
+        QuestionWithOptionsDTO dto = new QuestionWithOptionsDTO();
+        dto.setId(questionDTO.getId());
+        dto.setQuestion(questionDTO.getQuestion());
+        dto.setIdSurvey(questionDTO.getIdSurvey());
+        dto.setIdQuestiontype(questionDTO.getIdQuestiontype());
+    
+        
+        List<Option> options = optionRepository.findByQuestion_Id(questionDTO.getId());
+        
+        List<OptionDTO> optionDTOs = options.stream()
+            .map(option -> new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId(), option.isCritical()))
+            .collect(Collectors.toList());
+    
+        dto.setOptionsDTO(optionDTOs);
+    
+        return dto;
+    }
+
+    public  List<QuestionDTO> findBySurveyId(Long surveyId){
+
+        return questionRepository.findBySurveyId(surveyId).stream().map(this::toDTO).collect(Collectors.toList());
+
     }
 }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.frimac.preoperational.domain.dto.SurveyDTO;
+import com.frimac.preoperational.domain.dto.SurveyFilledModuleDTO;
 import com.frimac.preoperational.domain.services.Survey.SurveyService;
 
 @RestController
@@ -54,5 +55,14 @@ public class SurveyController {
     public ResponseEntity<Void> deleteSurvey(@PathVariable Long id) {
         return surveyService.delete(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+
+    @GetMapping("/withQuestionsOptions/{surveyId}")
+    public ResponseEntity<SurveyFilledModuleDTO> findSurveyWithQuestionsById(@PathVariable Long surveyId){
+        return surveyService.findSurveyWithQuestionsById(surveyId)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }
 

@@ -30,13 +30,16 @@ public class Option {
     @JoinColumn(name = "idf_question", referencedColumnName = "id_question", nullable = false)
     private Question question;
 
+    private boolean isCritical;
+
     public Option() {
     }
 
-    public Option(Long id, String text, Question question) {
+    public Option(Long id, String text, Question question, boolean isCritical) {
         this.id = id;
         this.text = text;
         this.question = question;
+        this.isCritical = isCritical;
     }
 
     public Long getId() {
@@ -62,4 +65,15 @@ public class Option {
     public void setQuestion(Question question) {
         this.question = question;
     }
+
+    public boolean isCritical() {
+        return isCritical;
+    }
+
+    public void setCritical(boolean isCritical) {
+        this.isCritical = isCritical;
+    }
+
+    
+
 }

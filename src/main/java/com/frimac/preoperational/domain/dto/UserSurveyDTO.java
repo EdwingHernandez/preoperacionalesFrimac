@@ -2,17 +2,19 @@ package com.frimac.preoperational.domain.dto;
 
 import java.util.List;
 
+import com.frimac.preoperational.persistence.entities.Survey;
+
 public class UserSurveyDTO {
     private String idUser;
     private String name;
     private String position;
     private String area;
-    private List<String> enabledSurveys;
+    private List<Survey> enabledSurveys;
 
     public UserSurveyDTO() {
     }
 
-    public UserSurveyDTO(String idUser, String name, String position, String area, List<String> enabledSurveys) {
+    public UserSurveyDTO(String idUser, String name, String position, String area, List<Survey> enabledSurveys) {
         this.idUser = idUser;
         this.name = name;
         this.position = position;
@@ -52,11 +54,11 @@ public class UserSurveyDTO {
         this.area = area;
     }
 
-    public List<String> getEnabledSurveys() {
+    public List<Survey> getEnabledSurveys() {
         return enabledSurveys;
     }
 
-    public void setEnabledSurveys(List<String> enabledSurveys) {
+    public void setEnabledSurveys(List<Survey> enabledSurveys) {
         this.enabledSurveys = enabledSurveys;
     }
 

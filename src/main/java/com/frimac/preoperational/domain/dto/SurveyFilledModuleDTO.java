@@ -7,20 +7,19 @@ public class SurveyFilledModuleDTO {
     private String nameSurvey;
     private String descriptionSurvey;
     private boolean stateSurvey;
-    private List<QuestionDTO> questions;
+    private List<QuestionWithOptionsDTO> questionsDTO;
 
-    // Constructor vacío (necesario para frameworks como Jackson)
+
     public SurveyFilledModuleDTO() {
     }
 
-    // Constructor con parámetros
     public SurveyFilledModuleDTO(Long idSurvey, String nameSurvey, String descriptionSurvey, 
-                                 boolean stateSurvey, List<QuestionDTO> questions) {
+        boolean stateSurvey, List<QuestionWithOptionsDTO> questionsDTO) {
         this.idSurvey = idSurvey;
         this.nameSurvey = nameSurvey;
         this.descriptionSurvey = descriptionSurvey;
         this.stateSurvey = stateSurvey;
-        this.questions = questions;
+        this.questionsDTO = questionsDTO;
     }
 
     // Getters y Setters
@@ -56,12 +55,12 @@ public class SurveyFilledModuleDTO {
         this.stateSurvey = stateSurvey;
     }
 
-    public List<QuestionDTO> getQuestions() {
-        return questions;
+    public List<QuestionWithOptionsDTO> getQuestionsDTO() {
+        return questionsDTO;
     }
 
-    public void setQuestions(List<QuestionDTO> questions) {
-        this.questions = questions;
+    public void setQuestionsDTO(List<QuestionWithOptionsDTO> questionsDTO) {
+        this.questionsDTO = questionsDTO;
     }
 
     @Override
@@ -71,7 +70,7 @@ public class SurveyFilledModuleDTO {
                 ", nameSurvey='" + nameSurvey + '\'' +
                 ", descriptionSurvey='" + descriptionSurvey + '\'' +
                 ", stateSurvey=" + stateSurvey +
-                ", questions=" + questions +
+                ", questions=" + questionsDTO +
                 '}';
     }
 }

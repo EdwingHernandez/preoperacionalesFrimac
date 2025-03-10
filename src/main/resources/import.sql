@@ -34,27 +34,27 @@ INSERT INTO question_type (id_qtype, qtype_name) VALUES (3, 'Escala de Likert');
 
 -- Insertar Preguntas
 
-INSERT INTO question (id_question, question_text, idf_survey, idf_qtype) VALUES (1, 'Numero de identificacion', 1, 1);
-INSERT INTO question (id_question, question_text, idf_survey, idf_qtype) VALUES (2, 'Novedades para el no diligenciamiento de la inspeccion preoperacional', 1, 2);
-INSERT INTO question (id_question, question_text, idf_survey, idf_qtype) VALUES (3, '003 - TIPO DE VEHICULO', 1, 2);
+INSERT INTO question (id_question, question_text, idf_survey, idf_qtype) VALUES (1000, 'Numero de identificacion', 1, 1);
+INSERT INTO question (id_question, question_text, idf_survey, idf_qtype) VALUES (1001, 'Novedades para el no diligenciamiento de la inspeccion preoperacional', 1, 2);
+INSERT INTO question (id_question, question_text, idf_survey, idf_qtype) VALUES (1002, '003 - TIPO DE VEHICULO', 1, 2);
 
 
 -- Opciones para la pregunta de novedades (id_question = 2)
-INSERT INTO options (option_text, idf_question) VALUES ('Ninguna, Realizar encuesta', 2);
-INSERT INTO options (option_text, idf_question) VALUES ('Vehiculo en taller', 2);
-INSERT INTO options (option_text, idf_question) VALUES ('Conductor incapacitado', 2);
-INSERT INTO options (option_text, idf_question) VALUES ('Parada de Planta/Bodega del cliente', 2);
-INSERT INTO options (option_text, idf_question) VALUES ('Otra, ¿Indique cual?', 2);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('Ninguna, Realizar encuesta', 1001, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('Vehiculo en taller', 1001, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('Conductor incapacitado', 1001, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('Parada de Planta/Bodega del cliente', 1001, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('Otra, ¿Indique cual?', 1001, FALSE);
 
 -- Opciones para la pregunta de tipo de vehículo (id_question = 3)
-INSERT INTO options (option_text, idf_question) VALUES ('TM-Tractomula', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('DBL-Doble Troque', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('SEN-Sencillo', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('CAM-Camioneta', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('TURB-Turbo', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('TM UF-Tractomula Refrigerada', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('DBL UF-Doble Troque Refrigerado', 3);
-INSERT INTO options (option_text, idf_question) VALUES ('TURB UF-Turbo Refrigerado', 3);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('TM-Tractomula', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('DBL-Doble Troque', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('SEN-Sencillo', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('CAM-Camioneta', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('TURB-Turbo', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('TM UF-Tractomula Refrigerada', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('DBL UF-Doble Troque Refrigerado', 1002, FALSE);
+INSERT INTO options (option_text, idf_question, is_critical) VALUES ('TURB UF-Turbo Refrigerado', 1002, FALSE);
 
 
 

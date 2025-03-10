@@ -7,6 +7,11 @@ public class QuestionDTO {
     private Long idSurvey;
     private Long idQuestiontype;
 
+
+
+    public QuestionDTO() {
+    }
+
     public QuestionDTO(Long id, String question, Long idSurvey, Long idQuestiontype) {
         this.id = id;
         this.question = question;

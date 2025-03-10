@@ -17,6 +17,7 @@ import com.frimac.preoperational.domain.services.TorreControl.TorreApiService;
 import com.frimac.preoperational.persistence.entities.Area;
 import com.frimac.preoperational.persistence.entities.Position;
 import com.frimac.preoperational.persistence.entities.Role;
+import com.frimac.preoperational.persistence.entities.Survey;
 import com.frimac.preoperational.persistence.entities.User;
 import com.frimac.preoperational.persistence.repositories.AreaRepository;
 import com.frimac.preoperational.persistence.repositories.PositionRepository;
@@ -150,9 +151,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
     
-        List<String> enabledSurveys = surveyAssignmentRepository.findByUser(user).stream()
+        List<Survey> enabledSurveys = surveyAssignmentRepository.findByUser(user).stream()
                 .filter(surveyAssignment -> Boolean.TRUE.equals(surveyAssignment.getSurvey().getState()))
-                .map(surveyAssignment -> surveyAssignment.getSurvey().getName())
+                .map(surveyAssignment -> surveyAssignment.getSurvey())
                 .collect(Collectors.toList());
     
         return new UserSurveyDTO(
