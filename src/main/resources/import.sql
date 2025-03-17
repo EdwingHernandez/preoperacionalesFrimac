@@ -1,9 +1,9 @@
 USE preoperationaldb;
 
 -- Insertar Roles
-INSERT INTO role (id_role, role_name) VALUES (1, 'Administrador');
-INSERT INTO role (id_role, role_name) VALUES (2, 'Supervisor');
-INSERT INTO role (id_role, role_name) VALUES (3, 'Operador');
+INSERT INTO role (id_role, role_name) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO role (id_role, role_name) VALUES (2, 'ROLE_USER');
+-- INSERT INTO role (id_role, role_name) VALUES (3, 'ROLE_USER');
 
 -- Insertar Áreas
 INSERT INTO area (id_area, name_area) VALUES (1, 'Logistica');
@@ -16,10 +16,10 @@ INSERT INTO position (id_position, name_position) VALUES (2, 'Analista');
 INSERT INTO position (id_position, name_position) VALUES (3, 'Tecnico');
 
 -- Insertar Usuarios
-INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('U001', 'Juan Perez', 'Activo', 'Interno', 1, 1, 1);
-INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('U002', 'Maria López', 'Activo', 'Externo', 2, 2, 2);
-INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('U003', 'Carlos Sanchez', 'Inactivo', 'Interno', 3, 3, 3);
-INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position) VALUES ('8505416', 'CARMONA VILLA CARLOS JAVIER', 'Activo', 'Propio', 3, 1, 3);
+INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position, password, username, enable) VALUES ('U001', 'Juan Perez', 'Activo', 'Interno', 1, 1, 1, '$2a$10$Vp9py0xMq0jbYj7oStBBp./Vw9YkkEf4t6ktUJybXXNLc39L39FD6', 'U001', TRUE);
+INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position, password, username, enable) VALUES ('U002', 'Maria López', 'Activo', 'Externo', 2, 2, 2, '$2a$10$Vp9py0xMq0jbYj7oStBBp./Vw9YkkEf4t6ktUJybXXNLc39L39FD6', 'U002', FALSE);
+INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position, password, username, enable) VALUES ('U003', 'Carlos Sanchez', 'Inactivo', 'Interno', 2, 3, 3, '$2a$10$Vp9py0xMq0jbYj7oStBBp./Vw9YkkEf4t6ktUJybXXNLc39L39FD6', 'U003', TRUE);
+INSERT INTO user (id_user, user_name, user_state, user_type, idf_role, idf_area, idf_position, password, username, enable) VALUES ('8505416', 'CARMONA VILLA CARLOS JAVIER', 'Activo', 'Propio', 1, 1, 3, '$2a$10$Vp9py0xMq0jbYj7oStBBp./Vw9YkkEf4t6ktUJybXXNLc39L39FD6', '8505416', TRUE);
 
 
 -- Insertar Encuestas
@@ -71,6 +71,6 @@ INSERT INTO survey_completion (id_completion, completion_date, iscompleted, idf_
 INSERT INTO survey_completion (id_completion, completion_date, iscompleted, idf_user, idf_survey) VALUES (3, '2024-02-12', TRUE, 'U003', 3);
 
 -- Insertar Respuestas a Preguntas
-INSERT INTO question_response (id_response, response_date, response, idf_user, idf_question) VALUES (1, '2024-02-10', 'Muy Segura', 'U001', 1);
-INSERT INTO question_response (id_response, response_date, response, idf_user, idf_question) VALUES (2, '2024-02-11', 'Mas areas de descanso', 'U002', 2);
-INSERT INTO question_response (id_response, response_date, response, idf_user, idf_question) VALUES (3, '2024-02-12', 'Montacargas', 'U003', 3);
+INSERT INTO question_response (id_response, response_date, response, idf_user, idf_question) VALUES (1, '2024-02-10', 'Muy Segura', 'U001', 1000);
+INSERT INTO question_response (id_response, response_date, response, idf_user, idf_question) VALUES (2, '2024-02-11', 'Mas areas de descanso', 'U002', 1001);
+INSERT INTO question_response (id_response, response_date, response, idf_user, idf_question) VALUES (3, '2024-02-12', 'Montacargas', 'U003', 1002);

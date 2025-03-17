@@ -16,5 +16,6 @@ public interface UserService {
     void removeUser(String id);
     UserSurveyDTO findUserWithSurveys(String id);
     UserValidationDTO findUserTC(String id);
+    boolean existsByUsername(String username);
 
 }

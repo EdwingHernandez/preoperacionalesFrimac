@@ -19,6 +19,8 @@ public class User {
     @Column(name = "id_user")
     private String id;
 
+    private String password;
+
 
     @NotBlank
     @Size(min = 4, max = 50)
@@ -50,6 +52,10 @@ public class User {
     private Position position;
 
 
+    private String username;
+    private boolean enable;
+
+    
     public User() {
     }
 
@@ -109,6 +115,16 @@ public class User {
     }
 
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+
     public void setArea(Area area) {
         this.area = area;
     }
@@ -123,6 +139,28 @@ public class User {
         this.position = position;
     }
 
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+    
 }
 
 

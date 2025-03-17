@@ -9,8 +9,12 @@ public class UserDTO {
     private Long idRole;
     private Long idArea;
     private Long idPosition;
+    private String password;
+    private String username;
+    private boolean enable; 
 
-    public UserDTO(String id, String name, String state, String type, Long idRole, Long idArea, Long idPosition) {
+    public UserDTO(String id, String name, String state, String type, 
+                    Long idRole, Long idArea, Long idPosition, String password, String username, boolean enable) {
         this.id = id;
         this.name = name;
         this.state = state;
@@ -18,6 +22,9 @@ public class UserDTO {
         this.idRole = idRole;
         this.idArea = idArea;
         this.idPosition = idPosition;
+        this.password = password;
+        this.username = username;
+        this.enable = enable;
     }
 
     public String getId() {
@@ -74,6 +81,30 @@ public class UserDTO {
 
     public void setIdPosition(Long idPosition) {
         this.idPosition = idPosition;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
     
 }

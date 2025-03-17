@@ -23,10 +23,12 @@ public class PreoperationalApplication {
     @Bean
     CorsFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowCredentials(true);
         corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:5173")); 
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfig.setAllowedHeaders(Arrays.asList("*"));
-        corsConfig.setAllowCredentials(true);
+        corsConfig.setExposedHeaders(Arrays.asList("Set-Cookie"));
+        
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);

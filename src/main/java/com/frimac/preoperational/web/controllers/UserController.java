@@ -19,6 +19,9 @@ import com.frimac.preoperational.domain.dto.UserSurveyDTO;
 import com.frimac.preoperational.domain.dto.UserValidationDTO;
 import com.frimac.preoperational.domain.services.User.UserService;
 
+import java.security.Principal;
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -26,8 +29,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        System.out.println("ID recibido: " + userDTO.getId());
         UserDTO createdUser = userService.saveUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
@@ -62,8 +66,19 @@ public class UserController {
     }
 
     @GetMapping("/torre/{id}")
-    public ResponseEntity<UserValidationDTO> findUserTC(@PathVariable String id){
+    public ResponseEntity<UserValidationDTO> findUserTC(@PathVariable String id) {
         return ResponseEntity.ok(userService.findUserTC(id));
     }
-}
 
+    @GetMapping("/validate-session")
+    public ResponseEntity<?> validateSession(HttpServletRequest request) {
+        Principal userPrincipal = request.getUserPrincipal();
+
+        if (userPrincipal != null) {
+            return ResponseEntity.ok().body("Sesión válida");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autenticado");
+        }
+    }
+
+}
