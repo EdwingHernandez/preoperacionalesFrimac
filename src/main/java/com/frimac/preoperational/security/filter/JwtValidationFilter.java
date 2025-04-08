@@ -54,7 +54,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
     
         String token = null;
         for (Cookie cookie : cookies) {
-            if ("jwt".equals(cookie.getName())) {  
+            if ("JWT".equals(cookie.getName())) {  
                 token = cookie.getValue();
                 System.out.println(token);
                 break;

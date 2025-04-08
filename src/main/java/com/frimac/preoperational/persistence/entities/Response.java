@@ -28,7 +28,7 @@ public class Response {
     @Column(name = "response_date", nullable = false)
     private Date date;
 
-
+    
     @ManyToOne
     @JoinColumn(name = "idf_user", referencedColumnName = "id_user", nullable = false)
     private User user; 
@@ -38,6 +38,7 @@ public class Response {
     @JoinColumn(name = "idf_question", referencedColumnName = "id_question", nullable = false)
     private Question question;
 
+    private String reasonText;
 
     public Response() {
     }
@@ -92,4 +93,15 @@ public class Response {
         this.question = question;
     }
 
+
+    public String getReasonText() {
+        return reasonText;
+    }
+
+
+    public void setReasonText(String reasonText) {
+        this.reasonText = reasonText;
+    }
+
+    
 }

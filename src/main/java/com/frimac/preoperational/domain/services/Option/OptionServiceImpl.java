@@ -45,7 +45,7 @@ public class OptionServiceImpl implements OptionService {
     }
 
     private OptionDTO convertToDTO(Option option) {
-        return new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId(), option.isCritical());
+        return new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId(), option.isCritical(), option.isReason());
     }
 }
 

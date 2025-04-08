@@ -105,7 +105,8 @@ public class ResponseServiceImpl implements ResponseService {
             response.getResponse(),
             response.getDate(),
             response.getUser().getId(),
-            response.getQuestion().getId()
+            response.getQuestion().getId(),
+            response.getReasonText()
         );
     }
 }

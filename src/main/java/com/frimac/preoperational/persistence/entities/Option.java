@@ -31,6 +31,7 @@ public class Option {
     private Question question;
 
     private boolean isCritical;
+    private boolean reason;
 
     public Option() {
     }
@@ -74,6 +75,13 @@ public class Option {
         this.isCritical = isCritical;
     }
 
-    
+    public boolean isReason() {
+        return reason;
+    }
 
+    public void setReason(boolean reason) {
+        this.reason = reason;
+    }
+
+    
 }

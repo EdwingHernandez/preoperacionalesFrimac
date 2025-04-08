@@ -6,12 +6,14 @@ public class OptionDTO {
     private String text;
     private Long idQuestion;
     private boolean isCritical;
+    private boolean reason;
 
-    public OptionDTO(Long id, String text, Long idQuestion, boolean isCritical) {
+    public OptionDTO(Long id, String text, Long idQuestion, boolean isCritical, boolean reason) {
         this.id = id;
         this.text = text;
         this.idQuestion = idQuestion;
         this.isCritical = isCritical;
+        this.reason = reason;
     }
 
     public Long getId() {
@@ -45,6 +47,15 @@ public class OptionDTO {
     public void setCritical(boolean isCritical) {
         this.isCritical = isCritical;
     }
+
+    public boolean isReason() {
+        return reason;
+    }
+
+    public void setReason(boolean reason) {
+        this.reason = reason;
+    }
+
 
    
 }

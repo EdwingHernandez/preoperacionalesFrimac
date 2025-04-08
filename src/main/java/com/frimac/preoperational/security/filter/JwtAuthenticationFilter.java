@@ -1,5 +1,8 @@
 package com.frimac.preoperational.security.filter;
 
+import static com.frimac.preoperational.security.TokenJwtConfig.CONTENT_TYPE;
+import static com.frimac.preoperational.security.TokenJwtConfig.SECRET_KEY;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
@@ -25,8 +28,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import static com.frimac.preoperational.security.TokenJwtConfig.*;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
@@ -73,14 +74,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             String token = Jwts.builder()
                 .subject(username)
                 .claims(claims)
-                .expiration(new Date(System.currentTimeMillis() + 3600000))
                 .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(SECRET_KEY)
                 .compact();
 
             Cookie cookie = new Cookie("JWT", token);
             cookie.setHttpOnly(true);
-            cookie.setSecure(true);
+            cookie.setSecure(false);
             cookie.setPath("/");
             cookie.setMaxAge(3600);     
 

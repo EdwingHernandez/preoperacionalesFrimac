@@ -134,7 +134,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<Option> options = optionRepository.findByQuestion_Id(questionDTO.getId());
         
         List<OptionDTO> optionDTOs = options.stream()
-            .map(option -> new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId(), option.isCritical()))
+            .map(option -> new OptionDTO(option.getId(), option.getText(), option.getQuestion().getId(), option.isCritical(), option.isReason()))
             .collect(Collectors.toList());
     
         dto.setOptionsDTO(optionDTOs);

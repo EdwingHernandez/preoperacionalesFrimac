@@ -73,7 +73,7 @@ public class UserController {
     @GetMapping("/validate-session")
     public ResponseEntity<?> validateSession(HttpServletRequest request) {
         Principal userPrincipal = request.getUserPrincipal();
-
+        System.out.println("Este es el usuario principal:" + userPrincipal);
         if (userPrincipal != null) {
             return ResponseEntity.ok().body("Sesión válida");
         } else {
